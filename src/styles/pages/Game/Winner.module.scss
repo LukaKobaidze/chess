@@ -1,0 +1,38 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: hsl(30, 7%, 17%);
+  border-radius: 7px;
+  text-align: center;
+}
+
+.reason {
+  border-bottom: 1px solid hsl(30, 7%, 77%);
+  padding: 10px;
+  font-size: 17px;
+}
+
+.winner {
+  display: block;
+  font-size: 35px;
+  font-weight: bold;
+  padding: 25px 80px;
+}
+
+.rematch-text {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: hsl(30, 7%, 67%);
+}
+
+.buttons {
+  margin: 0 10px;
+  padding-bottom: 10px;
+
+  & > :first-child {
+    margin-right: 10px;
+  }
+}

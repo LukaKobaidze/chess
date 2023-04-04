@@ -1,0 +1,19 @@
+.container {
+  touch-action: none;
+  user-select: none;
+}
+
+.piece {
+  position: absolute;
+
+  &-dragging {
+    cursor: grabbing;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+}

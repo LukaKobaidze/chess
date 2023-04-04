@@ -1,0 +1,120 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-top: 20px;
+  margin-bottom: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 95%;
+  max-width: 400px;
+  margin-top: -100px;
+  margin-bottom: auto;
+}
+
+.side {
+  --btn-active: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--clr-element);
+  border-radius: 8px;
+  margin-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  box-shadow: inset 0px -8px 0px var(--clr-element-shadow);
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--clr-text-light);
+
+  &__text {
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-size: 22px;
+    color: var(--clr-text);
+  }
+
+  &__buttons-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--clr-bg);
+    padding: 9px;
+    border-radius: 7px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      border-radius: 7px;
+      left: 9px;
+      width: 75px;
+      height: 75px;
+      background-color: #a8bfc9;
+      transform: translateX(calc(75px * var(--btn-active)));
+      transition: transform 176ms;
+    }
+  }
+
+  &-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    z-index: 1;
+
+    &-random {
+      &-wrapper {
+        display: flex;
+        height: 100%;
+        transform: scale(1.45);
+
+        & > * {
+          position: relative;
+          flex-basis: 50%;
+          height: 100%;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  &__pawn {
+    transform: scale(1.4);
+
+    &-random {
+      position: absolute;
+      right: 0;
+      transform: translate(50%, -50%);
+      top: 50%;
+
+      &--black {
+        left: 0;
+        right: initial;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+.btn-play-cpu {
+  margin-bottom: 20px;
+}
+
+.btn-freeplay {
+  background-color: hsl(39, 100%, 69%) !important;
+  box-shadow: 0 5px 0 hsl(39, 100%, 39%) !important;
+}

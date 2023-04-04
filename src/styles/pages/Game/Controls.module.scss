@@ -1,0 +1,48 @@
+.controls {
+  align-self: flex-start;
+  padding-top: 13px;
+  flex-grow: 0;
+  z-index: 2;
+  margin-left: 5px;
+
+  @media (max-width: 960px) {
+    display: flex;
+    padding-top: 0;
+    padding-left: 10px;
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    opacity: 0.7;
+
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  &__customize {
+    & > svg {
+      width: 23px;
+      height: 23px;
+    }
+  }
+
+  &__audio {
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--active {
+    opacity: 1;
+  }
+}

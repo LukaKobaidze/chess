@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  gap: 5px;
+  padding: 5px 0px 5px 10px;
+
+  @media (max-width: 960px) {
+    height: auto;
+    width: auto;
+    padding: 5px 0;
+  }
+}
+
+.clock {
+  align-self: flex-end;
+}

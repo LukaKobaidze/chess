@@ -1,0 +1,89 @@
+.container {
+  --square-size: 0; // receives from `style` prop
+  position: relative;
+  display: grid;
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.ranks,
+.files {
+  position: absolute;
+  display: grid;
+  font-weight: bold;
+  font-size: var(--font-size);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+
+  & > * {
+    padding: calc(var(--font-size) / 8) calc(var(--font-size) / 6);
+  }
+}
+
+.ranks {
+  height: 100%;
+  grid-template-rows: repeat(8, 1fr);
+  top: 0;
+  left: 0;
+}
+
+.files {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  grid-template-columns: repeat(8, 1fr);
+  justify-items: end;
+}
+
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+
+  &-white {
+    background-color: var(--clr-square-white);
+  }
+
+  &-black {
+    background-color: var(--clr-square-black);
+  }
+
+  &-highlight {
+    background-color: yellow;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+  }
+
+  &-focused {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 3px solid green;
+  }
+
+  &-validMove {
+    --size: calc(var(--square-size) / 3.6);
+    --offset: calc(var(--square-size) / 2 - var(--size) / 2);
+    position: absolute;
+    top: var(--offset);
+    left: var(--offset);
+    width: var(--size);
+    height: var(--size);
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+  }
+
+  &-validCapture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    border-radius: 50%;
+    border: calc(var(--square-size) / 18) solid rgba(0, 0, 0, 0.3);
+  }
+}

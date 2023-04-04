@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap');
+
+:root {
+  --clr-bg: #1a2a33;
+  --clr-element: #1f3641;
+  --clr-element-lighter: hsl(199, 35%, 25%);
+  --clr-element-shadow: #10212a;
+  --clr-text: #A8BFC9;
+  --clr-text-light: #a8bfc980;
+
+  // --clr-bg: hsl(30, 7%, 18%);
+  --clr-text: #eaeaea;
+  --clr-square-white: #eaeaea;
+  --clr-square-black: #7a95a1;
+  --clr-square-valid: yellow;
+  --clr-square-kill: #ea3c53;
+  --clr-button: hsl(30, 7%, 28%);
+  --clr-button-hover: hsl(30, 7%, 33%);
+  --clr-button-active: hsl(30, 7%, 36%);
+  --clr-button-text: #eaeaea;
+  --clr-input: rgba(255, 255, 255, 0.12);
+  --clr-input-focus: hsl(30, 7%, 8%);
+  --clr-input-text: #eaeaea;
+  --clr-input-border-hover: rgba(255, 255, 255, 0.13);
+  --clr-input-border-focus: var(--clr-button);
+  --clr-bg-chat: hsl(30, 7%, 10%);
+  --clr-chat-scroll-track: hsl(30, 7%, 20%);
+  --clr-chat-scroll-thumb: hsl(30, 7%, 40%);
+  --clr-chat-scroll-thumb-hover: hsl(30, 7%, 50%);
+  --clr-chat-scroll-thumb-active: hsl(30, 7%, 57%);
+  --clr-bg-textpopup: hsl(30, 7%, 40%);
+  --clr-bg-textpopup-lighter: hsl(30, 7%, 50%);
+  --clr-arrow-line: #0000009e;
+  --clr-arrow-head: #000000d8;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  font-size: 16px;
+}
+
+.opacity-hide {
+  opacity: 0;
+}
+
+.button {
+  font-family: inherit;
+  display: inline-block;
+  font-size: 16px;
+  text-decoration: none;
+  color: inherit;
+  padding: 15px 10px;
+  border-radius: 10px;
+  background-color: #31c3bd;
+  box-shadow: 0 5px 0 #118c87;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 1.25px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(115%);
+  }
+
+  &:active {
+    transform: translateY(5px);
+    box-shadow: none;
+  }
+}

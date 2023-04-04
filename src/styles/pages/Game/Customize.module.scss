@@ -1,0 +1,63 @@
+.container {
+  position: relative;
+  padding: 10px 30px;
+
+  @media (max-width: 1110px) {
+    padding: 10px 15px;
+  }
+}
+
+.button-close {
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  background: none;
+  border: none;
+  color: hsl(30, 7%, 87%);
+  cursor: pointer;
+
+  & > svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  &__span {
+    color: var(--clr-text);
+    transition: color 200ms;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  &--off {
+    .setting__span {
+      color: var(--clr-text-light);
+    }
+  }
+}
+
+.selection {
+  width: 220px;
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  &__input {
+    margin-left: 5px;
+    accent-color: var(--clr-element-lighter);
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  --size: 23px;
+  --rotate: 0deg; // gets from 'style' prop
+  position: relative;
+  border: 2px solid #fff;
+  border-color: currentColor;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    transform-origin: bottom;
+    width: 2px;
+    height: calc(var(--size) / 2 - 4px);
+    background-color: currentColor;
+    border-radius: 100vw;
+    transform: translate(-50%, -100%) rotate(var(--rotate));
+  }
+}

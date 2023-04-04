@@ -1,0 +1,32 @@
+.input {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: var(--clr-input);
+  color: var(--clr-input-text);
+  border: 2px solid transparent;
+  transition: background-color 150ms, border-color 150ms;
+
+  &--focused {
+    background-color: var(--clr-input-focus);
+    border-color: var(--clr-input-border-focus);
+    outline: none;
+  }
+
+  &--blurred {
+    outline: none;
+  }
+
+  &:not(&--blurred):focus,
+  &:not(&--blurred):focus-visible {
+    background-color: var(--clr-input-focus);
+    border-color: var(--clr-input-border-focus);
+    outline: none;
+  }
+
+  &:not(&--focused, &:focus, &:focus-visible, &--blurred):hover {
+    border-color: var(--clr-input-border-hover);
+  }
+}

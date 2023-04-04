@@ -1,0 +1,184 @@
+.sidebar {
+  width: 100%;
+  align-self: stretch;
+  max-width: 400px;
+  min-width: 310px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--clr-element-shadow);
+  border-radius: 5px;
+  border: 1px solid var(--clr-element-lighter);
+  margin: 5px;
+
+  @media (max-width: 960px) {
+    align-self: initial;
+    max-width: initial;
+    height: 320px;
+  }
+
+  & ::-webkit-scrollbar {
+    width: 10px;
+
+    &-track {
+      background: var(--clr-bg);
+      border-radius: 100vw;
+    }
+    &-thumb {
+      background: hsl(199, 35%, 33%);
+      border-radius: 100vw;
+
+      &:hover {
+        background: hsl(199, 35%, 40%);
+      }
+
+      &:active {
+        background: hsl(199, 35%, 45%);
+      }
+    }
+  }
+}
+
+.chess-moves {
+  --padding: 0px;
+
+  overflow-y: auto;
+  margin: 3px 3px 0 var(--padding);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 3px 0 3px 10px;
+
+    &--even {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    &__buttons {
+      min-width: 150px;
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 10px;
+
+      & > button {
+        font-weight: bold;
+        padding: 4px 7px;
+
+        &:not(.chess-moves--active) {
+          background: none;
+        }
+      }
+    }
+  }
+}
+
+.draw-offer {
+  text-align: center;
+  padding-top: 5px;
+
+  &--span {
+    font-weight: bold;
+  }
+
+  &--button {
+    margin-top: 5px;
+  }
+}
+.drawresign-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 95%;
+  padding-top: 5px;
+  margin-top: auto;
+  padding-bottom: 10px;
+
+  @media (max-width: 960px) {
+    justify-content: initial;
+  }
+
+  @media (max-width: 400px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.chessmoves-controls {
+  display: flex;
+
+  @media (max-width: 985px) {
+    margin-left: 5px;
+  }
+}
+
+.drawresign {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-left: 5px;
+
+  @media (max-width: 960px) {
+    margin-right: 40px;
+  }
+
+  &__button {
+    background: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+    opacity: 0.8;
+
+    &:hover,
+    &--active {
+      opacity: 1;
+    }
+
+    @media (max-width: 985px) {
+      width: auto;
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+  }
+}
+
+.control-button {
+  color: var(--clr-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--disable {
+    color: var(--clr-text-light);
+    cursor: default;
+  }
+
+  & > svg {
+    transform: scale(1.75);
+  }
+
+  & .icon-arrow {
+    transform: scale(2.25);
+  }
+}
+
+.textpopup {
+  text-align: center;
+  padding-top: 5px;
+  font-size: 14px;
+
+  &__button {
+    display: block;
+    margin: 5px auto 0 auto;
+    font-size: 13px;
+  }
+}

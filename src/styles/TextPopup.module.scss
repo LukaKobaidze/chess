@@ -1,0 +1,130 @@
+@mixin textShowProps() {
+  opacity: 1;
+  pointer-events: initial;
+
+  &--top {
+    transform: translateY(calc(-100% - var(--offset)));
+  }
+
+  &--top-right {
+    transform: translate(30%, calc(-100% - var(--offset)));
+  }
+
+  &--right {
+    transform: translateX(calc(var(--offset)));
+  }
+
+  &--bottom {
+    transform: translateY(calc(100% + var(--offset)));
+  }
+
+  &--left {
+    transform: translateX(calc(var(--offset) * -1));
+  }
+}
+
+.wrapper {
+  --offset: 0; // gets via 'style' prop
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  &--hover {
+    & :first-child:focus-visible + .text {
+      @include textShowProps();
+    }
+
+    @media (hover: hover) {
+      & :first-child:hover + .text {
+        @include textShowProps();
+      }
+    }
+  }
+
+  &--show {
+    .text {
+      @include textShowProps();
+    }
+  }
+}
+
+.text {
+  --pointer-size: 6px;
+  --pointer-size-half: calc(var(--pointer-size) / 2);
+  font-size: 12px;
+  position: absolute;
+  opacity: 0;
+  background-color: var(--clr-element);
+  color: var(--clr-white);
+  border-radius: 4px;
+  padding: 4px 13px;
+  pointer-events: none;
+  transition: opacity 125ms, transform 125ms;
+  width: var(--width);
+
+  &::before {
+    content: '';
+    width: var(--pointer-size);
+    height: var(--pointer-size);
+    position: absolute;
+    border-radius: 2px;
+    background-color: inherit;
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+
+  &--top {
+    top: calc(var(--pointer-size-half) * -1);
+    transform: translateY(-100%);
+
+    &::before {
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 50%) rotate(45deg);
+    }
+  }
+
+  &--top-right {
+    top: calc(var(--pointer-size-half) * -1);
+    transform: translate(30%, -100%);
+
+    &::before {
+      bottom: 0;
+      left: 15%;
+      transform: translate(-50%, 50%) rotate(45deg);
+    }
+  }
+
+  &--right {
+    left: calc(100% + var(--pointer-size-half));
+
+    &::before {
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  &--bottom {
+    bottom: calc(var(--pointer-size-half) * -1);
+    transform: translateY(100%);
+
+    &::before {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  &--left {
+    right: calc(100% + var(--pointer-size-half));
+
+    &::before {
+      right: 0;
+      top: 50%;
+      transform: translate(50%, -50%) rotate(45deg);
+    }
+  }
+}
