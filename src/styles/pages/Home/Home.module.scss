@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,8 +7,23 @@
   text-transform: uppercase;
 }
 
-.heading {
-  margin-top: 20px;
+.github {
+  position: absolute;
+  top: 20px;
+  left: 42px;
+
+  &__anchor {
+    color: inherit;
+  }
+
+  &__popup {
+    white-space: nowrap;
+    text-transform: initial;
+    font-size: 15px;
+  }
+}
+
+.logo {
   margin-bottom: auto;
 }
 
@@ -18,7 +33,6 @@
   margin: 0 auto;
   width: 95%;
   max-width: 400px;
-  margin-top: -100px;
   margin-bottom: auto;
 }
 

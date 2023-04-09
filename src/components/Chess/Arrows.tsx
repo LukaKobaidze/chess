@@ -54,7 +54,7 @@ export default function Arrows(props: Props) {
       ctx.lineTo(toX, toY);
       ctx.lineCap = 'round';
       ctx.strokeStyle = colorLine;
-      ctx.lineWidth = 10;
+      ctx.lineWidth = boardSize / 73;
       ctx.stroke();
 
       // starting a new path from the head of the arrow to one of the sides of the point
@@ -82,7 +82,7 @@ export default function Arrows(props: Props) {
 
       // draws the paths created above
       ctx.strokeStyle = colorHead;
-      ctx.lineWidth = 12;
+      ctx.lineWidth = boardSize / 60.75;
       ctx.stroke();
       ctx.fillStyle = colorHead;
       ctx.fill();

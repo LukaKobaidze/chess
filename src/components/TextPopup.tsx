@@ -8,6 +8,7 @@ interface Props {
   offset?: number;
   width?: number;
   className?: string;
+  classNamePopup?: string;
   backgroundColor?: string;
   children: React.ReactNode;
 }
@@ -21,6 +22,7 @@ export default function TextPopup(props: Props) {
     offset = 6,
     width = 'auto',
     className,
+    classNamePopup,
     backgroundColor,
     children,
   } = props;
@@ -41,7 +43,9 @@ export default function TextPopup(props: Props) {
         {children}
 
         <div
-          className={`${styles.text} ${styles[`text--${position}`]}`}
+          className={`${styles.text} ${
+            styles[`text--${position}`]
+          } ${classNamePopup}`}
           style={textStyle}
         >
           {text}

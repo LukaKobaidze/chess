@@ -6,3 +6,4 @@ export { default as Modal } from './Modal';
 export { default as Selection } from './Selection';
 export { default as Switch } from './Switch';
 export { default as TextPopup } from './TextPopup';
+export { default as Logo } from './Logo';

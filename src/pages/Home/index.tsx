@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from 'context/global.context';
+import { IconGithub } from 'assets/images';
 import { ReactComponent as PawnWhite } from 'assets/images/piece/cburnett/wP.svg';
 import { ReactComponent as PawnBlack } from 'assets/images/piece/cburnett/bP.svg';
+import { Logo, TextPopup } from 'components';
 import styles from 'styles/pages/Home/Home.module.scss';
 
 export default function Home() {
@@ -14,7 +16,25 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Chess</h1>
+      <TextPopup
+        position="bottom"
+        text="source code"
+        showOnHover
+        className={styles.github}
+        classNamePopup={styles['github__popup']}
+      >
+        <a
+          href="https://github.com/LukaKobaidze/chess"
+          className={styles['github__anchor']}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <IconGithub />
+        </a>
+      </TextPopup>
+      <div className={styles.logo}>
+        <Logo />
+      </div>
       <div className={styles.content}>
         <div className={styles.side} style={sideStyle}>
           <p>Choose a side</p>
