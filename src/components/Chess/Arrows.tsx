@@ -24,8 +24,7 @@ export default function Arrows(props: Props) {
     const colorHead = globalCSSVariable('--clr-arrow-head');
     ctx.clearRect(0, 0, c.width, c.height);
 
-    const headlen = 20;
-
+    const headlen = boardSize / 36.45;
     data.forEach(([[colFrom, rowFrom], [colTo, rowTo]]) => {
       let fromX = squareSize * colFrom - squareSizeHalf;
       let toX = squareSize * colTo - squareSizeHalf;
@@ -82,7 +81,7 @@ export default function Arrows(props: Props) {
 
       // draws the paths created above
       ctx.strokeStyle = colorHead;
-      ctx.lineWidth = boardSize / 60.75;
+      ctx.lineWidth = 12;
       ctx.stroke();
       ctx.fillStyle = colorHead;
       ctx.fill();
