@@ -63,6 +63,7 @@
   pointer-events: none;
   transition: opacity 125ms, transform 125ms;
   width: var(--width);
+  user-select: none;
 
   &::before {
     content: '';

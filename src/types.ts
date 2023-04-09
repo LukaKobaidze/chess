@@ -28,3 +28,5 @@ export type PieceMoveIndexes = { from: number; to: number };
 export type TimelineMove = PieceMoveIndexes & { promotion?: PiecePromotionType };
 
 export type SideType = 'white' | 'black' | 'random';
+
+export type ArrowDataType = [[number, number], [number, number]];

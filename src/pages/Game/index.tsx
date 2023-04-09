@@ -1,19 +1,21 @@
 import {
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
 } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalContext } from 'context/global.context';
-import { useAudio, useLocalStorageState, useWindowDimensions } from 'hooks';
-import { PieceColor } from 'types';
 import { AudioCapture, AudioMove } from 'assets/audio';
 import { IconTrophy } from 'assets/images';
-import { getRobotMove } from 'helpers';
+import { PieceColor, PieceMoveIndexes, PiecePromotionType } from 'types';
 import { pieceSets } from 'data';
+import { getRobotMove } from 'helpers';
+import { useAudio, useLocalStorageState, useWindowDimensions } from 'hooks';
 import { gameReducer, initialState } from './game.reducer';
 import { Button, Chess, AlertOutsideClick } from 'components';
 import Sidebar from './Sidebar';
@@ -25,14 +27,19 @@ export default function Game() {
   const navigate = useNavigate();
   const { gamemode } = useParams();
   const { side } = useContext(GlobalContext);
-  const [windowWidth, windowHeight] = useWindowDimensions();
+
   const [boardSize, setBoardSize] = useState(0);
   const [winnerMinimize, setWinnerMinimize] = useState(false);
   const [userHasInteracted, setUserHasInteracted] = useState(false);
-  const chessWrapperRef = useRef<HTMLDivElement>(null);
 
-  const [playMoveSound] = useAudio(AudioMove);
-  const [playCaptureSound] = useAudio(AudioCapture);
+  const chessWrapperRef = useRef<HTMLDivElement>(null);
+  const resignConfirmRef = useRef<HTMLButtonElement>(null);
+
+  const playMoveSound = useAudio(AudioMove);
+  const playCaptureSound = useAudio(AudioCapture);
+
+  const [windowWidth, windowHeight] = useWindowDimensions();
+
   const [boardType, setBoardType] = useLocalStorageState('chess-board', 1);
   const [pieceSet, setPieceSet] = useLocalStorageState('chess-pieceset', 0);
   const [highlightMoves, setHighlightMoves] = useLocalStorageState(
@@ -43,12 +50,16 @@ export default function Game() {
     'boardSizePercentage',
     100
   );
+
   const [reducerState, dispatch] = useReducer(gameReducer, initialState);
 
-  const audio = {
-    move: playMoveSound,
-    capture: playCaptureSound,
-  };
+  const audio = useMemo(
+    () => ({
+      move: playMoveSound,
+      capture: playCaptureSound,
+    }),
+    [playCaptureSound, playMoveSound]
+  );
 
   const isReplaying = reducerState.replay !== reducerState.movesTimeline.length - 1;
 
@@ -182,6 +193,25 @@ export default function Game() {
     }
   }, [reducerState.alwaysPromoteToQueen]);
 
+  const handlePieceMove = useCallback(
+    (indexes: PieceMoveIndexes) => {
+      dispatch({
+        type: 'PieceMove',
+        payload: { move: indexes, audio },
+      });
+    },
+    [audio]
+  );
+
+  const handlePiecePromotion = useCallback((promotion: PiecePromotionType) => {
+    dispatch({ type: 'PiecePromotion', payload: promotion });
+  }, []);
+
+  const chessStyle = useMemo(
+    () => ({ width: boardSize, height: boardSize }),
+    [boardSize]
+  );
+
   return (
     <div className={styles.container}>
       {reducerState.playerColor && reducerState.winner && winnerMinimize && (
@@ -230,27 +260,21 @@ export default function Game() {
           latestMove={reducerState.latestMove}
           piecePromoting={reducerState.piecePromoting}
           boardSize={boardSize}
-          onPieceMove={(indexes) =>
-            dispatch({
-              type: 'PieceMove',
-              payload: { move: indexes, audio },
-            })
-          }
-          onPiecePromotion={(promotion) =>
-            dispatch({ type: 'PiecePromotion', payload: promotion })
-          }
+          onPieceMove={handlePieceMove}
+          onPiecePromotion={handlePiecePromotion}
           turn={reducerState.turn}
           disable={isReplaying || !!reducerState.winner}
           highlightMoves={highlightMoves}
           playerColor={reducerState.playerColor}
           controlBoth={gamemode === 'freeplay'}
-          style={{ width: boardSize, height: boardSize }}
+          style={chessStyle}
         />
 
         {reducerState.playerColor && reducerState.winner && !winnerMinimize && (
           <AlertOutsideClick
             shouldHandle={!!reducerState.winner}
             onOutsideClick={handleWinnerOutsideClick}
+            ignore={[resignConfirmRef]}
           >
             <Winner
               textWinner={
@@ -303,6 +327,7 @@ export default function Game() {
         toggleAlwaysPromoteToQueen={() =>
           dispatch({ type: 'ToggleAlwaysPromoteToQueen' })
         }
+        resignConfirmRef={resignConfirmRef}
       />
     </div>
   );

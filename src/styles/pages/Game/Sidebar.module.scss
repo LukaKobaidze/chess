@@ -38,7 +38,7 @@
   }
 }
 
-.chess-moves {
+.moves {
   --padding: 0px;
 
   overflow-y: auto;
@@ -49,6 +49,12 @@
     align-items: center;
     padding: 3px 0 3px 10px;
 
+    &-num {
+      color: var(--clr-text-light);
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
     &--even {
       background-color: rgba(255, 255, 255, 0.04);
     }
@@ -56,17 +62,21 @@
     &__buttons {
       min-width: 150px;
       display: flex;
-      justify-content: space-between;
       padding: 3px 10px;
+    }
 
-      & > button {
-        font-weight: bold;
-        padding: 4px 7px;
+    &__btn {
+      font-weight: bold;
+      padding: 4px 7px;
+      background: none;
 
-        &:not(.chess-moves--active) {
-          background: none;
-        }
+      &--active {
+        background-color: var(--clr-element-lighter);
       }
+    }
+
+    &__white-wrapper {
+      width: 100px;
     }
   }
 }
@@ -174,6 +184,7 @@
 .textpopup {
   text-align: center;
   padding-top: 5px;
+  padding-bottom: 5px;
   font-size: 14px;
 
   &__button {

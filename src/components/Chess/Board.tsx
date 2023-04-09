@@ -7,8 +7,8 @@ import styles from 'styles/Chess/Board.module.scss';
 interface Props {
   type: number;
   size: number;
-  playerColor: PieceColor | null;
   activePieceIndex: number | null;
+  playerColor: PieceColor | null;
   latestMove: PieceMoveIndexes | null;
   focusedSquare: number;
   validMoves: number[];

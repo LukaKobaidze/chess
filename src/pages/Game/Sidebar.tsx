@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChessWinner } from 'types';
 import {
   IconArrowLeft,
   IconArrowRight,
@@ -7,6 +6,7 @@ import {
   IconSkipBeginning,
   IconSkipEnding,
 } from 'assets/images';
+import { ChessWinner } from 'types';
 import { useWindowDimensions } from 'hooks';
 import { Button, TextPopup, AlertOutsideClick } from 'components';
 import Customize from './Customize';
@@ -30,6 +30,7 @@ interface Props {
   setHighlightMoves: React.Dispatch<React.SetStateAction<boolean>>;
   alwaysPromoteToQueen: boolean;
   toggleAlwaysPromoteToQueen: () => void;
+  resignConfirmRef: React.RefObject<HTMLButtonElement>;
 }
 
 export default function Sidebar(props: Props) {
@@ -51,13 +52,13 @@ export default function Sidebar(props: Props) {
     setHighlightMoves,
     alwaysPromoteToQueen,
     toggleAlwaysPromoteToQueen,
+    resignConfirmRef,
   } = props;
 
   const [windowWidth] = useWindowDimensions();
   const [movesFormatted, setMovesFormatted] = useState<string[][]>([]);
   const [resignConfirmation, setResignConfirmation] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const resignConfirmButton = useRef<HTMLButtonElement>(null);
 
   const handleMoveReplay = (n: number) => {
     handleReplay(n);
@@ -79,7 +80,9 @@ export default function Sidebar(props: Props) {
   };
 
   const handleResignClick = () => {
-    setResignConfirmation(true);
+    if (!winner) {
+      setResignConfirmation(true);
+    }
   };
 
   const handleResignConfirm = () => {
@@ -116,9 +119,9 @@ export default function Sidebar(props: Props) {
 
   useEffect(() => {
     if (resignConfirmation) {
-      resignConfirmButton.current?.focus();
+      resignConfirmRef.current?.focus();
     }
-  }, [resignConfirmation]);
+  }, [resignConfirmation, resignConfirmRef]);
 
   const isTimelineBeginning = replay === -1;
   const isTimelineEnding = replay === movesTimelineNotation.length - 1;
@@ -127,7 +130,7 @@ export default function Sidebar(props: Props) {
     <div className={styles.sidebar}>
       {!isCustomizing && (
         <>
-          <div className={styles['chess-moves']} ref={containerRef}>
+          <div className={styles['moves']} ref={containerRef}>
             {movesFormatted.map(([moveA, moveB], i) => {
               const nthA = i * 2;
               const nthB = i * 2 + 1;
@@ -135,13 +138,13 @@ export default function Sidebar(props: Props) {
               return (
                 <div
                   key={i}
-                  className={`${styles['chess-moves__item']} ${
-                    (i + 1) % 2 === 0 ? styles['item--even'] : ''
+                  className={`${styles['moves__item']} ${
+                    (i + 1) % 2 === 0 ? styles['moves__item--even'] : ''
                   }`}
                 >
-                  <div>{i + 1}.</div>
+                  <div className={styles['moves__item-num']}>{i + 1}.</div>
                   <div
-                    className={styles['chess-moves__item__buttons']}
+                    className={styles['moves__item__buttons']}
                     ref={(node) => {
                       const container = containerRef.current;
                       if (container && node && [nthA, nthB].includes(replay)) {
@@ -150,19 +153,21 @@ export default function Sidebar(props: Props) {
                       }
                     }}
                   >
-                    <Button
-                      className={
-                        nthA === replay ? styles['chess-moves--active'] : ''
-                      }
-                      onClick={() => handleMoveReplay(nthA)}
-                    >
-                      {moveA}
-                    </Button>
+                    <div className={styles['moves__item__white-wrapper']}>
+                      <Button
+                        className={`${styles['moves__item__btn']} ${
+                          nthA === replay ? styles['moves__item__btn--active'] : ''
+                        }`}
+                        onClick={() => handleMoveReplay(nthA)}
+                      >
+                        {moveA}
+                      </Button>
+                    </div>
                     {moveB && (
                       <Button
-                        className={
-                          nthB === replay ? styles['chess-moves--active'] : ''
-                        }
+                        className={`${styles['moves__item__btn']} ${
+                          nthB === replay ? styles['moves__item__btn--active'] : ''
+                        }`}
                         onClick={() => handleMoveReplay(nthB)}
                       >
                         {moveB}
@@ -175,45 +180,43 @@ export default function Sidebar(props: Props) {
           </div>
 
           <div className={styles['drawresign-controls']}>
-            {!winner && (
-              <div className={styles.drawresign}>
-                <AlertOutsideClick
-                  shouldHandle={resignConfirmation}
-                  onOutsideClick={() => setResignConfirmation(false)}
+            <div className={styles.drawresign}>
+              <AlertOutsideClick
+                shouldHandle={resignConfirmation}
+                onOutsideClick={() => setResignConfirmation(false)}
+              >
+                <TextPopup
+                  text={
+                    <div className={styles['textpopup']}>
+                      <span>Are you sure you want to resign?</span>
+                      <Button
+                        className={styles['textpopup__button']}
+                        onClick={handleResignConfirm}
+                        tabIndex={resignConfirmation ? 0 : -1}
+                        ref={resignConfirmRef}
+                      >
+                        Confirm
+                      </Button>
+                    </div>
+                  }
+                  position={windowWidth > 960 ? 'top' : 'top-right'}
+                  show={resignConfirmation}
+                  width={200}
                 >
-                  <TextPopup
-                    text={
-                      <div className={styles['textpopup']}>
-                        <span>Are you sure you want to resign?</span>
-                        <Button
-                          className={styles['textpopup__button']}
-                          onClick={handleResignConfirm}
-                          tabIndex={resignConfirmation ? 0 : -1}
-                          ref={resignConfirmButton}
-                        >
-                          Confirm
-                        </Button>
-                      </div>
-                    }
-                    position={windowWidth > 960 ? 'top' : 'top-right'}
-                    show={resignConfirmation}
-                    width={200}
+                  <Button
+                    className={`${styles['drawresign__button']} ${
+                      resignConfirmation ? styles['drawresign__button--active'] : ''
+                    }`}
+                    onClick={handleResignClick}
+                    disabled={!!winner}
                   >
-                    <Button
-                      className={`${styles['drawresign__button']} ${
-                        resignConfirmation
-                          ? styles['drawresign__button--active']
-                          : ''
-                      }`}
-                      onClick={handleResignClick}
-                    >
-                      <span>Resign</span>
-                      <IconFlag className={styles['drawresign__icon']} />
-                    </Button>
-                  </TextPopup>
-                </AlertOutsideClick>
-              </div>
-            )}
+                    <span>Resign</span>
+                    <IconFlag className={styles['drawresign__icon']} />
+                  </Button>
+                </TextPopup>
+              </AlertOutsideClick>
+            </div>
+
             <div className={styles['chessmoves-controls']}>
               <TextPopup
                 position="top"

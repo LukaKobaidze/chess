@@ -18,7 +18,7 @@ export default function Winner(props: Props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.reason}>{reason}</div>
+      <div className={styles.reason}>{reason}</div> 
       <span className={styles.winner}>{textWinner}</span>
       <div className={styles.buttons}>
         <Button onClick={handleLeave}>Leave</Button>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { globalCSSVariable } from 'helpers';
-import { ArrowDataType } from './index';
+import { ArrowDataType } from 'types';
 import styles from 'styles/Chess/Arrows.module.scss';
 
 interface Props {
