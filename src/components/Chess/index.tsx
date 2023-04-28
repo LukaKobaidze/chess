@@ -107,9 +107,8 @@ export default function Chess(props: Props) {
             arrow[1][1] !== rowTo
         );
 
-        console.log({ colFrom, rowFrom });
-
         if (filterDuplicate.length !== state.length) return filterDuplicate;
+
         return [
           ...state,
           [
@@ -129,10 +128,6 @@ export default function Chess(props: Props) {
     rightClickStartX = 0;
     rightClickStartY = 0;
   }, [dataArrows.length]);
-
-  useEffect(() => {
-    console.log('rerender');
-  });
 
   useEffect(() => {
     if (disable) {

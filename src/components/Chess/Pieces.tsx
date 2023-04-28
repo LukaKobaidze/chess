@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ChessPieces,
   PieceColor,
@@ -108,9 +108,13 @@ export default function Pieces(props: Props) {
 
   const piecePromotingCoords = piecePromoting
     ? getCoordsBySquare(piecePromoting, playerColor, squareSize)
-    : null;
+    : null
 
   const boardSizeHalf = boardSize / 2;
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <div

@@ -151,8 +151,9 @@ function handlePieceMove(
       isPromoting && !state.alwaysPromoteToQueen ? payload.move.to : null,
     pieceMoves: {},
   };
+  return output
 
-  if (isPromoting && !state.alwaysPromoteToQueen) {
+  if (output.piecePromoting) {
     return output;
   }
 
@@ -165,19 +166,18 @@ function handlePieceMove(
     output.winner = { type: 'draw', reason: 'Insufficient Material' };
     return output;
   }
+
   const move: TimelineMove =
     isPromoting && state.alwaysPromoteToQueen
       ? { ...payload.move, promotion: 'queen' }
       : payload.move;
 
-  if (!isPromoting || state.alwaysPromoteToQueen) {
-    output.movesTimeline = [...output.movesTimeline, move];
-    output.movesTimelineNotation = [
-      ...output.movesTimelineNotation,
-      getMoveNotation(move, state.pieces, state.latestMove),
-    ];
-    output.replay = state.movesTimeline.length;
-  }
+  output.movesTimeline = [...output.movesTimeline, move];
+  output.movesTimelineNotation = [
+    ...output.movesTimelineNotation,
+    getMoveNotation(move, state.pieces, state.latestMove),
+  ];
+  output.replay = state.movesTimeline.length;
 
   if (!state.audioMute) {
     const isCapture: boolean = !!state.pieces[payload.move.to];

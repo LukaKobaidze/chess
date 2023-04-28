@@ -55,8 +55,6 @@ export const getCoordsBySquare = (
   playerColor: PieceColor,
   squareSize: number
 ): { x: number; y: number } => {
-  if (!playerColor) return { x: 0, y: 0 };
-
   const col = getColumn(index, playerColor);
   const row = getRow(index, playerColor);
 
@@ -329,7 +327,7 @@ export function piecePromotion(
   const piecesCopy = Object.keys(pieces).reduce((obj: ChessPieces, key) => {
     const index = Number(key);
     obj[index] = pieces[index];
-    return obj;
+    return obj
   }, {});
 
   piecesCopy[index].type = promotion;
