@@ -305,7 +305,7 @@ export default function Game() {
         onAudioToggle={() => dispatch({ type: 'ToggleAudio' })}
         onCustomizeToggle={handleCustomizeToggle}
       />
-      <Sidebar
+      {/* <Sidebar
         movesTimelineNotation={reducerState.movesTimelineNotation}
         replay={reducerState.replay}
         handleReplay={(val) =>
@@ -328,7 +328,7 @@ export default function Game() {
           dispatch({ type: 'ToggleAlwaysPromoteToQueen' })
         }
         resignConfirmRef={resignConfirmRef}
-      />
+    /> */}
     </div>
   );
 }

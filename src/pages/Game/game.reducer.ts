@@ -151,7 +151,6 @@ function handlePieceMove(
       isPromoting && !state.alwaysPromoteToQueen ? payload.move.to : null,
     pieceMoves: {},
   };
-  return output
 
   if (output.piecePromoting) {
     return output;
