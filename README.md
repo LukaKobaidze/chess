@@ -20,23 +20,19 @@ git clone https://github.com/LukaKobaidze/chess
 
 ```sh
 npm install
+
+  or
+
+yarn start
 ```
-
-or
-
-```sh
-yarn install
-```
-
 3. Start app
 
 ```sh
 npm start
-```
-or
-```sh
+
+  or
+
 yarn start
-```
 
 ## Acknowledgments
 
