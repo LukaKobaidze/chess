@@ -56,6 +56,7 @@ export default function Sidebar(props: Props) {
   } = props;
 
   const [windowWidth] = useWindowDimensions();
+  const [movesFormatted, setMovesFormatted] = useState<string[][]>([]);
   const [resignConfirmation, setResignConfirmation] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -90,12 +91,25 @@ export default function Sidebar(props: Props) {
   };
 
   useEffect(() => {
+    const formatted: string[][] = [];
+
+    for (let i = 0; i < movesTimelineNotation.length; i += 2) {
+      const white = movesTimelineNotation[i];
+      const black = movesTimelineNotation[i + 1];
+
+      formatted.push([white, black].filter(Boolean));
+    }
+
+    setMovesFormatted(formatted);
+  }, [movesTimelineNotation]);
+
+  useEffect(() => {
     const element = containerRef.current;
 
     if (element) {
       element.scrollTop = element.scrollHeight;
     }
-  }, [movesTimelineNotation]);
+  }, [movesFormatted]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -117,53 +131,51 @@ export default function Sidebar(props: Props) {
       {!isCustomizing && (
         <>
           <div className={styles['moves']} ref={containerRef}>
-            {movesTimelineNotation.map((move, i) => {
+            {movesFormatted.map(([moveA, moveB], i) => {
               const nthA = i * 2;
               const nthB = i * 2 + 1;
 
-              return <Button onClick={() => handleMoveReplay(i)}>{move}</Button>;
-
-              // return (
-              //   <div
-              //     key={i}
-              //     className={`${styles['moves__item']} ${
-              //       (i + 1) % 2 === 0 ? styles['moves__item--even'] : ''
-              //     }`}
-              //   >
-              //     <div className={styles['moves__item-num']}>{i + 1}.</div>
-              //     <div
-              //       className={styles['moves__item__buttons']}
-              //       ref={(node) => {
-              //         const container = containerRef.current;
-              //         if (container && node && [nthA, nthB].includes(replay)) {
-              //           container.scrollTop =
-              //             node.offsetTop - container.offsetTop - node.clientHeight;
-              //         }
-              //       }}
-              //     >
-              //       <div className={styles['moves__item__white-wrapper']}>
-              //         <Button
-              //           className={`${styles['moves__item__btn']} ${
-              //             nthA === replay ? styles['moves__item__btn--active'] : ''
-              //           }`}
-              //           onClick={() => handleMoveReplay(nthA)}
-              //         >
-              //           {moveA}
-              //         </Button>
-              //       </div>
-              //       {moveB && (
-              //         <Button
-              //           className={`${styles['moves__item__btn']} ${
-              //             nthB === replay ? styles['moves__item__btn--active'] : ''
-              //           }`}
-              //           onClick={() => handleMoveReplay(nthB)}
-              //         >
-              //           {moveB}
-              //         </Button>
-              //       )}
-              //     </div>
-              //   </div>
-              // );
+              return (
+                <div
+                  key={i}
+                  className={`${styles['moves__item']} ${
+                    (i + 1) % 2 === 0 ? styles['moves__item--even'] : ''
+                  }`}
+                >
+                  <div className={styles['moves__item-num']}>{i + 1}.</div>
+                  <div
+                    className={styles['moves__item__buttons']}
+                    ref={(node) => {
+                      const container = containerRef.current;
+                      if (container && node && [nthA, nthB].includes(replay)) {
+                        container.scrollTop =
+                          node.offsetTop - container.offsetTop - node.clientHeight;
+                      }
+                    }}
+                  >
+                    <div className={styles['moves__item__white-wrapper']}>
+                      <Button
+                        className={`${styles['moves__item__btn']} ${
+                          nthA === replay ? styles['moves__item__btn--active'] : ''
+                        }`}
+                        onClick={() => handleMoveReplay(nthA)}
+                      >
+                        {moveA}
+                      </Button>
+                    </div>
+                    {moveB && (
+                      <Button
+                        className={`${styles['moves__item__btn']} ${
+                          nthB === replay ? styles['moves__item__btn--active'] : ''
+                        }`}
+                        onClick={() => handleMoveReplay(nthB)}
+                      >
+                        {moveB}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              );
             })}
           </div>
 
