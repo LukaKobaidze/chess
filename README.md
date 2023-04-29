@@ -33,6 +33,10 @@ yarn install
 ```sh
 npm start
 ```
+or
+```sh
+yarn start
+```
 
 ## Acknowledgments
 
